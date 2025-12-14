@@ -240,7 +240,9 @@ PORT=3000
 ## Workflow Examples
 
 ### Password Reset
+
 **User**: "help me reset my password: john@company12345.comm"
+
 **Agent**:
 1. Calls `findUserByEmail` with the sender's email.
 2. Calls `resetPassword` with the User ID.
@@ -250,6 +252,7 @@ PORT=3000
 
 ### Account Locking
 **User**: "Lock jane@company12345.com account"
+
 **Agent**:
 1. Calls `findUserByEmail` with the sender's email.
 2. Calls `lockUser` with the User ID.
@@ -259,6 +262,7 @@ PORT=3000
 
 ### Group Management
 **User**: "Add jane@company12345.com to the Developers group"
+
 **Agent**:
 1. Calls `findUserByEmail` with the sender's email.
 2. Calls `addUserToGroup` with the User ID and Group Name.
@@ -268,12 +272,13 @@ PORT=3000
 
 ### MFA Reset
 **User**: "Reset MFA for jane@company12345.com"
+
 **Agent**:
 1. Calls `findUserByEmail` with the sender's email.
 2. Calls `resetMFA` with the User ID.
 3. **Reply**: "The MFA factors for Jane Doe have been successfully reset. She will need to re-enroll in MFA."
 
-![MFA Reset](screenshots/reset-mfa.png)
+![MFA Reset](screenshots/reset-MFA.png)
 
 ---
 
