@@ -1,0 +1,30 @@
+{
+  "name": "mastra-support-agent",
+  "version": "1.0.0",
+  "description": "IT Support Agent with Mastra + Slack + Okta",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "mastra dev",
+    "build": "mastra build",
+    "start": "mastra start"
+  },
+  "keywords": ["mastra", "slack", "okta", "ai-agent"],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^2.0.86",
+    "@mastra/core": "^0.24.8",
+    "@mastra/loggers": "^0.10.19",
+    "dotenv": "^17.2.3",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.1",
+    "mastra": "^0.18.8",
+    "typescript": "^5.9.3"
+  }
+}
