@@ -1,6 +1,10 @@
 # Building an AI IT/HR Support Agent with Mastra.ai, Slack, and Okta
 
-In the modern workplace, IT and HR support teams are often overwhelmed with repetitive requests: "I forgot my password," "Can I join the Engineering group?", "How do I reset my MFA?". These are simple questions that take up valuable time. We thought about how we could have a tireless, intelligent agent living right in Slack (or whatever platform our team already uses), to handle these requests. We built an AI agent using Mastra.ai to do this by connecting it to an identity provider (Okta, in this case). 
+In the modern workplace, IT and HR support teams are often overwhelmed with repetitive requests: "I forgot my password," "Can I join the Engineering group?", "How do I reset my MFA?". These are simple questions that take up valuable time. 
+
+We wanted to build a tireless, intelligent agent that lived right in Slack to handle these requests. In this post, we'll walk through how we built an IT support agent using Mastra, Okta, and Slack.
+
+Let's dive in!
 
 ## Target Workflows
 ![Some workflows](./screenshots/slack-usage.png)
@@ -9,11 +13,10 @@ Our agent will handle some common questions that could be asked to an IT/HR supp
 *   **Password Resets**: Safely resetting user passwords via Okta. This sends a reset link directly in Slack.
 *   **Access Provisioning**: Adding users to specific groups (e.g., "Add John to the Engineering group").
 *   **User Lookup**: Find an Okta user by their email address.
-*   **Lock User**: Lock a user's account.
-*   **Unlock User**: Unlock a user's account.
-*   **MFA reset**: Reset a user's MFA, forcing them to re-enroll. 
+*   **Lock/Unlock User**: Securely locking or unlocking a user's account.
+*   **MFA reset**: Resetting a user's MFA factors, forcing re-enrollment.
 
-We'll deploy this agent to **Slack**, making it accessible to the entire company with zero new software to install.
+We'll deploy this agent to Slack, making it accessible to the entire company with zero new software to install.
 
 ## How Mastra, Slack and Okta work together
 
@@ -75,7 +78,7 @@ The full code for this agent is available in the [mastra-ai-agent](./src) repo. 
 
 ## Tools
 
-First, we created tools to interact with Okta. Mastra uses Zod for schema validation, ensuring the LLM calls these functions correctly. 
+First, we created tools to interact with Okta. Mastra uses Zod for schema validation, ensuring the LLM calls these functions correctly. If the model output doesn't match the schema, Mastra helps correct it or raises an error, preventing bad API calls. 
 
 We created [src/mastra/tools/okta.ts](src/mastra/tools/okta.ts):
 
@@ -119,7 +122,8 @@ export const resetPassword = createTool({
 
 ### Workflows
 
-Next, we used Mastra's Agent system to define the agent, giving it instructions on how to handle requests and which tools available. Here, it is important to provide detailed instructions (prompts) that guide the agent on how to handle requests correctly.
+Next, we used Mastra's Agent system to define the agent, giving it instructions on how to handle requests and which tools available. We need to give it a persona and specific instructions on how to handle requests.
+The key pattern here is providing a set of prioritized rules in the system instructions. We explicitly tell the agent to "verify first" before taking destructive actions.
 
 We created [src/mastra/agents/agent.ts](src/mastra/agents/agent.ts):
 
@@ -143,7 +147,7 @@ export const itAgent = new Agent({
       When adding a user to a group, first find the user by email, then find the group by name, then add them.
       When resetting MFA, first find the user by email, then reset their factors.
 
-      Be cautious with sensitive operations like account locking and MFA resets - confirm the user's identity when possible.
+      Be cautious with sensitive operations like account locking and MFA resets and confirm the user's identity when possible.
   `,
   model: openai("gpt-4o-mini"),
   tools: { findUserByEmail, resetPassword, getUserGroups },
@@ -284,7 +288,7 @@ PORT=3000
 
 ## Looking forward
 
-This is a simple example of how we used Mastra to build an AI agent that can interact with Okta and Slack. Check out the full code in the [mastra-ai-agent](./src) repo! 
+This is just the beginning. We built a functional support agent that can handle a wide range of tasks. There is a lot of room for improvement and expansion. 
 
-It is a good starting point for building more complex agents that can handle a wide range of tasks. 
+Check out the full code in the [mastra-ai-agent](./src) repo! 
 
