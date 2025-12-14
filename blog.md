@@ -71,7 +71,7 @@ The scaffolded project would have files for an example weather agent. We removed
 
 ## Building the Agent
 
-The full code for this agent is available in [mastra-support-agent](./) repo. We show some snippets here for clarity. 
+The full code for this agent is available in the [mastra-ai-agent](./src) repo. We show some snippets here for clarity. 
 
 ## Tools
 
@@ -284,6 +284,7 @@ PORT=3000
 
 ## Looking forward
 
-This is a simple example of how we used Mastra to build an AI agent that can interact with Okta and Slack. 
+This is a simple example of how we used Mastra to build an AI agent that can interact with Okta and Slack. Check out the full code in the [mastra-ai-agent](./src) repo! 
+
 It is a good starting point for building more complex agents that can handle a wide range of tasks. 
 
