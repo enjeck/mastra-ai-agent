@@ -246,7 +246,7 @@ PORT=3000
 **Agent**:
 1. Calls `findUserByEmail` with the sender's email.
 2. Calls `resetPassword` with the User ID.
-3. **Reply**: "I've generated a password reset link for you. You can reset your password using the following lin [Reset Password](https://integrator-6682337.okta.com/reset_password/drp0yXN9QmYaU_caO_Zc)"
+3. **Reply**: "I've generated a password reset link for you. You can reset your password using the following lin [Reset Password](https://integrator-xxxxxxx.okta.com/reset_password/drp0yXN9QmYaU_caO_Zc)"
 
 ![Password Reset](screenshots/reset-password.png)
 
