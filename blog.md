@@ -57,7 +57,7 @@ sequenceDiagram
 
 ## Setup
 
-### 1. Create a Mastra Project
+### 1. Creating a Mastra Project
 
 Mastra makes it easy to start a new project using the `npm create mastra` command:
 
@@ -72,11 +72,11 @@ npm install dotenv
 ```
 The scaffolded project would have files for an example weather agent. We removed them and created our own files.
 
-## Building the Agent
+#### Building the Agent
 
 The full code for this agent is available in the [mastra-ai-agent](./src) repo. We show some snippets here for clarity. 
 
-## Tools
+#### Tools
 
 First, we created tools to interact with Okta. Mastra uses Zod for schema validation, ensuring the LLM calls these functions correctly. If the model output doesn't match the schema, Mastra helps correct it or raises an error, preventing bad API calls. 
 
@@ -120,7 +120,7 @@ export const resetPassword = createTool({
 // ... Add other tools like getUserGroups, lockUser, etc.
 ```
 
-### Workflows
+#### Workflows
 
 Next, we used Mastra's Agent system to define the agent, giving it instructions on how to handle requests and which tools available. We need to give it a persona and specific instructions on how to handle requests.
 The key pattern here is providing a set of prioritized rules in the system instructions. We explicitly tell the agent to "verify first" before taking destructive actions.
@@ -155,7 +155,7 @@ export const itAgent = new Agent({
 ```
 We used OpenAI's GPT-4o-mini model, which despite being a smaller model, provides good performance and is cost-effective for this type of task.
 
-### Responding to Slack
+#### Responding to Slack
 
 We edited [src/mastra/index.ts](src/mastra/index.ts) to add a Slack event handler:
 
@@ -217,7 +217,7 @@ We need an Okta developer account that provides the API for our agent to interac
     ![Okta API Token](./screenshots/okta-token.png)
 4.  We created some test users and groups in the Okta Dashboard. The email addresses we specify here would be used by the agent to find users in Okta and perform actions on them.
 
-### 3. Set Up Slack
+### 3. Setting Up Slack
 
 1.  Create a new app at [api.slack.com/apps](https://api.slack.com/apps) or use an existing app.
 2.  Under **OAuth & Permissions**, add these **Bot Token Scopes**: `chat:write`, `im:history`, `users:read`, `users:read.email`, `app_mentions:read`.
@@ -228,7 +228,7 @@ We need an Okta developer account that provides the API for our agent to interac
 5.  We enabled **Event Subscriptions** in Slack settings using our ngrok URL + `/slack/events` (e.g., `https://abcd1234.ngrok-free.dev/slack/events`). Subscribe to `message.im`, `message.channel`, and `app_mention`. This will allow the agent to respond to direct messages, channel messages, and mentions respectively.
     ![Slack Event Subscriptions](./screenshots/slack-events.png)
 
-### Configure Environment
+### 4. Configure Environment
 
 Create a `.env` file:
 ```env
